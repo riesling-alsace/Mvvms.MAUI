@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<UseMaui>true</UseMaui>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>Riesling.Library.Mvvms</RootNamespace>
+		<RootNamespace>Riesling.Mvvms</RootNamespace>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<TargetFramework>net10.0</TargetFramework>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MvvmBase.Core\MvvmBase.Core.csproj" />
+		<ProjectReference Include="..\Mvvms.Core\Mvvms.Core.csproj" />
 	</ItemGroup>
 
 </Project>
