@@ -1,10 +1,10 @@
 ﻿namespace Riesling.Mvvms.MAUI;
 
-public class ViewModelBase : PropertyBase {
+public class ViewModelBase : ModelBase {
 
 	#region Raise Methods
 
-	public override void RaisePropertiesChanged(params string[] propertyNames) {
+	protected override void RaisePropertiesChanged(params string[] propertyNames) {
 		if (MainThread.IsMainThread) {
 			base.RaisePropertiesChanged(propertyNames);
 		} else {
@@ -21,23 +21,21 @@ public class ViewModelBase : PropertyBase {
 }
 
 public abstract class ViewModelBase<TModelBase> : ViewModelBase
-    where TModelBase : PropertyBase, new() {
+    where TModelBase : ModelBase, new() {
 
     #region Properties
 
-    public TModelBase Model {
+    public required TModelBase Model {
         get;
-        private set;
+        init {
+            field = value;
+            Model.PropertiesChanged += Model_PropertiesChanged;
+        }
     }
 
     #endregion
 
     #region Constructors
-
-    protected ViewModelBase(TModelBase model) {
-        Model = model;
-        Model.PropertiesChanged += Model_PropertiesChanged;
-    }
 
     ~ViewModelBase() {
         Model.PropertiesChanged -= Model_PropertiesChanged;
