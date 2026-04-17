@@ -4,13 +4,13 @@ public class ViewModelBase : ModelBase {
 
 	#region Raise Methods
 
-	protected override void RaisePropertiesChanged(params string[] propertyNames) {
+	protected override void RaisePropertyChanged(params string[] propertyNames) {
 		if (MainThread.IsMainThread) {
-			base.RaisePropertiesChanged(propertyNames);
+			base.RaisePropertyChanged(propertyNames);
 		} else {
 			MainThread.BeginInvokeOnMainThread(() => {
 				lock (this) {
-					base.RaisePropertiesChanged(propertyNames);
+					base.RaisePropertyChanged(propertyNames);
 				}
 			});
 		}
@@ -25,7 +25,7 @@ public abstract class ViewModelBase<TModelBase> : ViewModelBase
 
     #region Properties
 
-    public required TModelBase Model {
+    public TModelBase Model {
         get;
         init {
             field = value;
@@ -36,6 +36,10 @@ public abstract class ViewModelBase<TModelBase> : ViewModelBase
     #endregion
 
     #region Constructors
+
+    protected ViewModelBase(TModelBase model) {
+        Model = model;
+    }
 
     ~ViewModelBase() {
         Model.PropertiesChanged -= Model_PropertiesChanged;
